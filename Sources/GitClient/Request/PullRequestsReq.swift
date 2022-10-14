@@ -7,4 +7,6 @@
 
 import Foundation
 
-struct PullRequestsReq: Request {}
+struct PullRequestsReq: Request {
+    public var path: String { "/issues" }
+}

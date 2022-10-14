@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-public struct InboxView: View {
+public struct NotificationsView: View {
     public init() {}
     public var body: some View {
         Text("Inbox")
     }
 }
 
-struct InboxView_Previews: PreviewProvider {
+struct NotificationsView_Previews: PreviewProvider {
     static var previews: some View {
-        InboxView()
+        NotificationsView()
     }
 }

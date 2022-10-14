@@ -7,8 +7,21 @@
 
 import SwiftUI
 import SwiftUINavigation
-import Views
+import Helpers
 import SafariServices
+import AppFeature
+
+extension Image {
+    public init(name: String, ofType type: String = "png") {
+        guard let path = Bundle.module.path(forResource: name, ofType: type),
+              let image = UIImage(contentsOfFile: path) else {
+            self.init(name)
+            return
+        }
+        self.init(uiImage: image)
+    }
+}
+
 
 public struct SignInView: View {
     @ObservedObject var viewModel: SignInViewModel
@@ -23,7 +36,9 @@ public struct SignInView: View {
             Image(name: "white-76")
             Spacer()
             VStack(alignment: .center, spacing: 20) {
-                Button(action: viewModel.signInWithGitHub) {
+                Button(action: {
+                    viewModel.signInWithGitHub()
+                }) {
                     if viewModel.loading {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
@@ -34,7 +49,9 @@ public struct SignInView: View {
                             .cornerRadius(30)
                     }
                 }
-                Button(action: viewModel.signInWithGitHub) {
+                Button(action: {
+                    viewModel.signInWithGitHub()
+                }) {
                     LoginButtonText("Sign in with GitHub Enterprise")
                         .foregroundColor(.black)
                         .background(Color(red: 242/255, green: 242/255, blue: 242/255))
@@ -63,8 +80,8 @@ public struct SignInView: View {
                 unwrapping: $viewModel.route,
                 case: /SignInViewModel.Route.signInWithGitHub
             ) {
-                GitHubSignInView(viewModel: $0.wrappedValue)
-        }
+                GitSignInView(viewModel: $0.wrappedValue)
+            }
         }
     }
 }

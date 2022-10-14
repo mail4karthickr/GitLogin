@@ -14,5 +14,5 @@ public struct RepositoryReq: Request {
         self.org = org
     }
     
-    public var path: String { "/orgs/\(org)/repos" }
+    public var path: String { "/users/\(org)/repos" }
 }

@@ -10,18 +10,19 @@ import Combine
 import SwiftUINavigation
 import Environment
 import Models
-import Service
+import GitClient
 
+@MainActor
 public class SignInViewModel: ObservableObject {
     @Published var route: Route?
     @Published var loading: Bool = false
+    private var authorizationResult: ((Result<Authorization, Error>) -> Void)?
     private var cancellables: Set<AnyCancellable> = []
     
     public enum Route: Equatable {
-        case signInWithGitHub(GitHubSignInViewModel)
+        case signInWithGitHub(GitSignInViewModel)
         case signInWithGitHubEnterprise
         case safariView(URL)
-        case rootView(Authorization)
         
         public static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
@@ -31,16 +32,18 @@ public class SignInViewModel: ObservableObject {
                 return true
             case (.safariView(let lhsUrl), .safariView(let rhsUrl)):
                 return lhsUrl == rhsUrl
-            case (.rootView(let lhsValue), .rootView(let rhsValue)):
-                return lhsValue == rhsValue
             default:
                 return false
             }
         }
     }
 
-    public init(route: Route? = nil) {
+    public init(
+        route: Route? = nil,
+        authorizationResult: ((Result<Authorization, Error>) -> Void)? = nil
+    ) {
         self.route = route
+        self.authorizationResult = authorizationResult
     }
 
     func termsOfUseTapped() {
@@ -53,25 +56,40 @@ public class SignInViewModel: ObservableObject {
 
     func signInWithGitHub() {
         self.route = .signInWithGitHub(
-            .init(loginResponse: fetchAccessToken(_:))
+            .init(loginResponse: { loginResponse in
+                Task {
+                    await self.fetchAccessToken(loginResponse)
+                }
+            })
         )
     }
 
-    func fetchAccessToken(_ response: LoginResponse) {
-        self.route = nil
+    func fetchAccessToken(_ response: LoginResponse) async {
+//        self.route = nil
+//        self.loading = true
+//         AppEnvironment.current.apiService
+//            .fetchAccessToken(accessCode: response.code)
+//            .receive(on: DispatchQueue.main)
+//            .sink(
+//                receiveCompletion: { compl in
+//                    self.loading = false
+//                },
+//                receiveValue: { (value: Authorization) in
+//                    print("authorization -- \(value)")
+//                    self.route = .tabView(value)
+//                }
+//            )
+//            .store(in: &self.cancellables)
+//        self.route = nil
         self.loading = true
-         AppEnvironment.current.apiService
-            .fetchAccessToken(accessCode: response.code)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { compl in
-                    self.loading = false
-                },
-                receiveValue: { (value: Authorization) in
-                    print("authorization -- \(value)")
-                    self.route = .rootView(value)
-                }
-            )
-            .store(in: &self.cancellables)
+        do {
+           let authorization = try await AppEnvironment.current.gitClient.fetchAccessToken(response.code)
+            let user = try await AppEnvironment.current.gitClient.user()
+            print("User -- \(user)")
+            self.authorizationResult?(.success(authorization))
+        } catch {
+            print("FetchError -- \(error)")
+        }
+        self.loading = false
     }
 }

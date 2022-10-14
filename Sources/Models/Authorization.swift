@@ -8,9 +8,9 @@
 import Foundation
 
 public struct Authorization {
-    let accessToken: String
-    let scope: String
-    let tokenType: String
+    public let accessToken: String
+    public let scope: String
+    public let tokenType: String
     
     public init(accessToken: String, scope: String, tokenType: String) {
         self.accessToken = accessToken
@@ -19,7 +19,7 @@ public struct Authorization {
     }
 }
 
-extension Authorization: Decodable {
+extension Authorization: Codable {
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case scope

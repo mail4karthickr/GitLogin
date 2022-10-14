@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import Service
+import GitClient
+import GitClientLive
 
 public protocol BundleType {
     func path(forResource name: String?, ofType ext: String?) -> String?
@@ -19,18 +20,18 @@ extension Bundle: BundleType {}
  */
 public struct Environment {
     /// A type that exposes endpoints for fetching github data.
-    public let apiService: ServiceType
+    public let gitClient: GitClient
 
     public let state: String
     
     public let bundle: BundleType
     
     public init(
-        apiService: ServiceType = GitHubService(),
+        gitClient: GitClient = .live(),
         state: String = UUID().uuidString,
         bundle: BundleType = Bundle.main
     ) {
-        self.apiService = apiService
+        self.gitClient = gitClient
         self.state = state
         self.bundle = bundle
     }

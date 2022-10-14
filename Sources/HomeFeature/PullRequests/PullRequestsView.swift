@@ -7,14 +7,20 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+struct PullRequestsView: View {
+    @ObservedObject var viewModel: PullRequestsViewModel
 
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        SwiftUIView()
+    init(viewModel: PullRequestsViewModel) {
+        self.viewModel = viewModel
+    }
+
+    var body: some View {
+        Text("PullRequestsView")
     }
 }
+//
+//struct PullRequestsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PullRequestsView()
+//    }
+//}

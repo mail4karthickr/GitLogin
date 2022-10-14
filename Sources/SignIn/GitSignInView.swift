@@ -9,7 +9,7 @@ import SwiftUI
 import WebView
 
 public struct GitSignInView: View {
-    @ObservedObject var viewModel: GitHubSignInViewModel
+    @ObservedObject var viewModel: GitSignInViewModel
     @Environment(\.presentationMode) private var presentationMode
 
     public var body: some View {

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct LoginButtonText: View {
+public struct LoginButtonText: View {
     let title: String
-    
-    init(_ title: String) {
+
+    public init(_ title: String) {
         self.title = title
     }
 
-    var body: some View {
+    public var body: some View {
         Text(title)
             .font(.system(size: 18))
             .padding()

@@ -5,4 +5,6 @@
 //  Created by Karthick Ramasamy on 08/10/22.
 //
 
-import Foundation
+import Combine
+
+class DiscussionsViewModel: ObservableObject {}

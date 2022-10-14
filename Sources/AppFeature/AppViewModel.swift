@@ -6,12 +6,17 @@
 //
 
 import Foundation
+import Models
 
 public class AppViewModel: ObservableObject {
-    
-    public init(selectedTab: Tab) {
+    @Published var selectedTab: Tab
+    private var authorization: Authorization
+
+    public init(
+        selectedTab: Tab = .home,
+        authorization: Authorization
+    ) {
         self.selectedTab = selectedTab
+        self.authorization = authorization
     }
-    
-    @Published var selectedTab: Tab = .home
 }
