@@ -12,7 +12,9 @@ import AppFeature
 struct AppFeaturePreviewApp: App {
     var body: some Scene {
         WindowGroup {
-            AppView(viewModel: AppViewModel(selectedTab: .notifications))
+            AppView(
+                viewModel: AppViewModel(selectedTab: .notifications, authorization: .init(accessToken: "", scope: "", tokenType: ""))
+            )
         }
     }
 }
