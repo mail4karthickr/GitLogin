@@ -12,9 +12,9 @@ import SwiftUINavigation
 import WebKit
 import Models
 import WebView
-import Service
+import GitClient
 
-public class GitHubSignInViewModel: ObservableObject {
+public class GitSignInViewModel: ObservableObject {
     
     enum Route {
         case signInWebView(WebViewModel)

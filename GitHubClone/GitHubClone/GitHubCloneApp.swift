@@ -12,10 +12,7 @@ import SignIn
 struct GitHubCloneApp: App {
     var body: some Scene {
         WindowGroup {
-            SignInView(viewModel: .init())
-                .onOpenURL { url in
-                    print("OnOpenURL -- \(url)")
-                }
+            RootView(viewModel: .init())
         }
     }
 }

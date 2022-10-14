@@ -14,18 +14,18 @@
         "package": "swift-case-paths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths.git",
         "state": {
-          "branch": null,
-          "revision": "241301b67d8551c26d8f09bd2c0e52cc49f18007",
-          "version": "0.8.0"
+          "branch": "main",
+          "revision": "7346701ea29da0a85d4403cf3d7a589a58ae3dee",
+          "version": null
         }
       },
       {
         "package": "swiftui-navigation",
         "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation",
         "state": {
-          "branch": null,
-          "revision": "2694c03284a368168b3e0b8d7ab52626802d2246",
-          "version": "0.1.0"
+          "branch": "main",
+          "revision": "51c7b145a721af4f4a336b96ce02b309038dd83c",
+          "version": null
         }
       }
     ]
